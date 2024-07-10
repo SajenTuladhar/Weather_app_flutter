@@ -10,6 +10,7 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomePageState();
 }
 
+
 class _HomePageState extends State<Home> {
   @override
   Widget build(BuildContext context) {
@@ -17,8 +18,10 @@ class _HomePageState extends State<Home> {
       appBar: AppBar(
         title: const Text("Weather App", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
         centerTitle: true,
-        actions: const [
-          Icon(Icons.refresh,color: Colors.white,)
+        actions:  [
+          IconButton(onPressed: (){}  , 
+          icon: const Icon(Icons.refresh
+          ))
         ],
       ),
     );
