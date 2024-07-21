@@ -1,6 +1,11 @@
 // ignore_for_file: file_names
 
+import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 class Home extends StatefulWidget {
@@ -25,47 +30,94 @@ class _HomePageState extends State<Home> {
               icon: const Icon(Icons.refresh))
         ],
       ),
-      body: const Padding(
-        padding:  EdgeInsets.all(16.0),
-        child:  Column(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             //main card
             SizedBox(
                 width: double.infinity,
                 child: Card(
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(18))),
                   elevation: 10,
-                  child: Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Column(
-                      children: [
-                        Text(
-                          '300F',
-                          style:
-                              TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-                        ),
-                         SizedBox(height: 10,),
-                        Icon(Icons.cloud,size: 70,),
-                          SizedBox(height: 20,),
-                        Text('Rain',style:
-                              TextStyle(fontSize: 20, ))
-                      ],
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(
+                        sigmaX: 0.5, sigmaY: 0.5), //applies gaussian blur
+                    child: const Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Column(
+                        children: [
+                          Text(
+                            '300F',
+                            style: TextStyle(
+                                fontSize: 32, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Icon(
+                            Icons.cloud,
+                            size: 70,
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text('Rain',
+                              style: TextStyle(
+                                fontSize: 20,
+                              ))
+                        ],
+                      ),
                     ),
                   ),
                 )),
-        
-            SizedBox(
+
+            const SizedBox(
               height: 30,
             ),
+            const Text(
+              'Weather Forecast',
+              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+            ),
+
+            const SizedBox(
+              height: 20,
+            ),
+            const Row(
+              children: [
+                SizedBox(width: 100, 
+              child: Card(
+                elevation: 8,
+                child: Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Text('3:00',style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+                      SizedBox(height: 8,),
+                      Icon(Icons.cloud,size: 32,),
+                      SizedBox(height: 8,),
+                      Text('320',style: TextStyle(fontSize: 12,),),
+                    ],
+                    
+                  ),
+                ),
+              )),
+              
+              ],
+            ),
+            const SizedBox(height: 20,),
             //forecast cards
-            Placeholder(
+            const Placeholder(
               fallbackHeight: 150,
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             //additonal info
-            Placeholder(
-              fallbackHeight: 150,
+            const Placeholder(
+              fallbackHeight: 10,
             ),
           ],
         ),
