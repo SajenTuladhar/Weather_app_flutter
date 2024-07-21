@@ -87,26 +87,25 @@ class _HomePageState extends State<Home> {
             ),
             const Row(
               children: [
-                SizedBox(width: 100, 
+              SizedBox(width: 119, 
               child: Card(
                 elevation: 8,
                 child: Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(14.0),
                   child: Column(
                     children: [
-                      Text('3:00',style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+                      Text('3:00',style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
                       SizedBox(height: 8,),
-                      Icon(Icons.cloud,size: 32,),
+                      Icon(Icons.cloud,size: 40,),
                       SizedBox(height: 8,),
-                      Text('320',style: TextStyle(fontSize: 12,),),
+                      Text('320',style: TextStyle(fontSize: 16,),),
                     ],
-                    
                   ),
                 ),
               )),
-              
               ],
             ),
+            
             const SizedBox(height: 20,),
             //forecast cards
             const Placeholder(
