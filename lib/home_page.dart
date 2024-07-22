@@ -1,12 +1,8 @@
 // ignore_for_file: file_names
 
 import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
+
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -94,7 +90,7 @@ class _HomePageState extends State<Home> {
                   padding: EdgeInsets.all(14.0),
                   child: Column(
                     children: [
-                      Text('3:00',style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                      Text('3:00',style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       SizedBox(height: 8,),
                       Icon(Icons.cloud,size: 40,),
                       SizedBox(height: 8,),
@@ -105,6 +101,7 @@ class _HomePageState extends State<Home> {
               )),
               ],
             ),
+             
             
             const SizedBox(height: 20,),
             //forecast cards
@@ -116,7 +113,7 @@ class _HomePageState extends State<Home> {
             ),
             //additonal info
             const Placeholder(
-              fallbackHeight: 10,
+              fallbackHeight: 70,
             ),
           ],
         ),
