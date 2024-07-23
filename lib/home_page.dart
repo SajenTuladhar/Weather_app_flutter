@@ -2,6 +2,8 @@
 
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:weather_app/card.dart';
 
 
 class Home extends StatefulWidget {
@@ -77,32 +79,23 @@ class _HomePageState extends State<Home> {
               'Weather Forecast',
               style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
             ),
-
             const SizedBox(
-              height: 20,
+              height: 15,
             ),
-            const Row(
-              children: [
-              SizedBox(width: 119, 
-              child: Card(
-                elevation: 8,
-                child: Padding(
-                  padding: EdgeInsets.all(14.0),
-                  child: Column(
-                    children: [
-                      Text('3:00',style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                      SizedBox(height: 8,),
-                      Icon(Icons.cloud,size: 40,),
-                      SizedBox(height: 8,),
-                      Text('320',style: TextStyle(fontSize: 16,),),
-                    ],
-                  ),
-                ),
-              )),
-              ],
+            const SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child:  Row(
+                children: [
+                  HourlyForecast(),
+                  HourlyForecast(),
+                  HourlyForecast(),
+                  HourlyForecast(),
+                  HourlyForecast(),
+                  HourlyForecast(),
+                ],
+              ),
             ),
              
-            
             const SizedBox(height: 20,),
             //forecast cards
             const Placeholder(
@@ -121,3 +114,4 @@ class _HomePageState extends State<Home> {
     );
   }
 }
+
