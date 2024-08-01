@@ -88,12 +88,23 @@ class _HomePageState extends State<Home> {
               child:  Row(
                 children: [
                   //forecast cards
-                  HourlyForecast(),
-                  HourlyForecast(),
-                  HourlyForecast(),
-                  HourlyForecast(),
-                  HourlyForecast(),
-                  HourlyForecast(),
+                  HourlyForecast(
+                    time: '11:15',icon: Icons.cloud,temperature: '340',),
+                  HourlyForecast(
+                    time: '1:00',icon: Icons.beach_access,temperature: '130',
+                  ),
+                  HourlyForecast(
+                    time: '3:20',icon: Icons.sunny,temperature: '450',
+                  ),
+                  HourlyForecast(
+                    time: '4:50',icon: Icons.sunny,temperature: '460',
+                  ),
+                  HourlyForecast(
+                    time: '6:15',icon: Icons.cloudy_snowing,temperature: '90',
+                  ),
+                  HourlyForecast(
+                    time: '7:05',icon: Icons.sunny,temperature: '440',
+                  ),
                 ],
               ),
             ),
@@ -111,9 +122,21 @@ class _HomePageState extends State<Home> {
             const Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                AdditionalInfo(),
-                AdditionalInfo(),
-                AdditionalInfo(),
+                AdditionalInfo(
+                  icon: Icons.water_drop_outlined,
+                  data: 'Humidity',
+                  value: '91',
+                ),
+                AdditionalInfo(
+                   icon: Icons.air,
+                  data: 'Wind Speed',
+                  value: '7.5',
+                ),
+                AdditionalInfo(
+                   icon: Icons.keyboard_double_arrow_down, 
+                  data: 'pressure',
+                  value: '1000',
+                ),
              
               ],
             )
