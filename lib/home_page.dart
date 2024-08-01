@@ -2,13 +2,21 @@
 
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:weather_app/Additional%20_info.dart';
 import 'package:weather_app/card.dart';
+import 'package:http/http.dart' as http;
+import 'package:weather_app/secrete.dart';
 
 
 class Home extends StatefulWidget {
   const Home({super.key});
+
+  Future getCurrentWeather() async{
+   String city = 'London';
+
+     final res = await http.get(Uri.parse('https//api.openweathermap.org/data/2.5/weather?q=$city,uk&APPID=$openWeatherApiKEY',));
+     print(res.body);
+  }
 
   @override
   State<Home> createState() => _HomePageState();
