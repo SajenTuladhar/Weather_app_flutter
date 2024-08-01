@@ -3,6 +3,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:weather_app/Additional%20_info.dart';
 import 'package:weather_app/card.dart';
 
 
@@ -82,10 +83,11 @@ class _HomePageState extends State<Home> {
             const SizedBox(
               height: 15,
             ),
-            const SingleChildScrollView(
+            const SingleChildScrollView( 
               scrollDirection: Axis.horizontal,
               child:  Row(
                 children: [
+                  //forecast cards
                   HourlyForecast(),
                   HourlyForecast(),
                   HourlyForecast(),
@@ -95,19 +97,26 @@ class _HomePageState extends State<Home> {
                 ],
               ),
             ),
-             
-            const SizedBox(height: 20,),
-            //forecast cards
-            const Placeholder(
-              fallbackHeight: 150,
-            ),
             const SizedBox(
               height: 30,
             ),
             //additonal info
-            const Placeholder(
-              fallbackHeight: 70,
+            const Text(
+              'Additional Information',
+              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
             ),
+            const SizedBox(
+              height: 18,
+            ),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                AdditionalInfo(),
+                AdditionalInfo(),
+                AdditionalInfo(),
+             
+              ],
+            )
           ],
         ),
       ),
