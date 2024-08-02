@@ -1,8 +1,10 @@
 // ignore_for_file: file_names
 
+import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:weather_app/Additional%20_info.dart';
+import 'package:weather_app/additional_info.dart';
+
 import 'package:weather_app/card.dart';
 import 'package:http/http.dart' as http;
 import 'package:weather_app/secrete.dart';
@@ -10,19 +12,45 @@ import 'package:weather_app/secrete.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
-
-  Future getCurrentWeather() async{
-   String city = 'London';
-
-     final res = await http.get(Uri.parse('https//api.openweathermap.org/data/2.5/weather?q=$city,uk&APPID=$openWeatherApiKEY',));
-     print(res.body);
-  }
-
+  
   @override
-  State<Home> createState() => _HomePageState();
+  State<Home> createState() => _HomeState();
 }
 
-class _HomePageState extends State<Home> {
+class _HomeState extends State<Home> {
+  double temp = 0 ;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getCurrentWeather();
+
+  }
+  Future getCurrentWeather() async{
+
+    try{
+    // Define the city for which to get the weather
+   String city = 'Nepal';
+
+    // Send a GET request to the OpenWeatherMap API
+     final result = await http.get( // await waits for http to get the requested data then goes to another line
+      Uri.parse( // converts url into uri object 
+        'https://api.openweathermap.org/data/2.5/forecast?q=$city,Kathmandu&APPID=$openWeatherApiKEY',
+        ));
+
+    final data = jsonDecode(result.body);
+
+    setState(() {
+      temp = data['list'][0]['main']['temp'] -273.round();
+      
+    });
+    
+    }
+    catch(e){
+      throw e.toString();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,26 +80,26 @@ class _HomePageState extends State<Home> {
                   child: BackdropFilter(
                     filter: ImageFilter.blur(
                         sigmaX: 0.5, sigmaY: 0.5), //applies gaussian blur
-                    child: const Padding(
-                      padding: EdgeInsets.all(16.0),
+                    child:  Padding(
+                      padding: const EdgeInsets.all(16.0),
                       child: Column(
                         children: [
                           Text(
-                            '300F',
-                            style: TextStyle(
+                            "$temp C",
+                            style: const TextStyle(
                                 fontSize: 32, fontWeight: FontWeight.bold),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
-                          Icon(
+                          const Icon(
                             Icons.cloud,
                             size: 70,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
-                          Text('Rain',
+                          const Text('Rain',
                               style: TextStyle(
                                 fontSize: 20,
                               ))
