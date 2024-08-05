@@ -18,14 +18,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  double temp = 0 ;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getCurrentWeather();
-
-  }
+  
   Future getCurrentWeather() async{
 
     try{
@@ -40,10 +33,10 @@ class _HomeState extends State<Home> {
 
     final data = jsonDecode(result.body);
 
-    setState(() {
-      temp = data['list'][0]['main']['temp'] -273.round();
+    
+       data['list'][0]['main']['temp'] -273.15.round();
       
-    });
+   
     
     }
     catch(e){
@@ -65,119 +58,131 @@ class _HomeState extends State<Home> {
               icon: const Icon(Icons.refresh))
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            //main card
-            SizedBox(
-                width: double.infinity,
-                child: Card(
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(18))),
-                  elevation: 10,
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(
-                        sigmaX: 0.5, sigmaY: 0.5), //applies gaussian blur
-                    child:  Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        children: [
-                          Text(
-                            "$temp C",
-                            style: const TextStyle(
-                                fontSize: 32, fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          const Icon(
-                            Icons.cloud,
-                            size: 70,
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          const Text('Rain',
-                              style: TextStyle(
-                                fontSize: 20,
-                              ))
-                        ],
+      body: FutureBuilder(
+        future: getCurrentWeather(),
+        builder: (context, snapshot) {
+          if(snapshot.connectionState == ConnectionState.waiting){
+            return const Center(child: CircularProgressIndicator.adaptive());
+          }
+
+          if (snapshot.hasError){
+            return  Text(snapshot.error.toString());
+          }
+          return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //main card
+              SizedBox(
+                  width: double.infinity,
+                  child: Card(
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(18))),
+                    elevation: 10,
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(
+                          sigmaX: 0.5, sigmaY: 0.5), //applies gaussian blur
+                      child:  Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          children: [
+                            Text(
+                              "temp C",
+                              style: const TextStyle(
+                                  fontSize: 32, fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            const Icon(
+                              Icons.cloud,
+                              size: 70,
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            const Text('Rain',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ))
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                )),
-
-            const SizedBox(
-              height: 30,
-            ),
-            const Text(
-              'Weather Forecast',
-              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            const SingleChildScrollView( 
-              scrollDirection: Axis.horizontal,
-              child:  Row(
-                children: [
-                  //forecast cards
-                  HourlyForecast(
-                    time: '11:15',icon: Icons.cloud,temperature: '340',),
-                  HourlyForecast(
-                    time: '1:00',icon: Icons.beach_access,temperature: '130',
-                  ),
-                  HourlyForecast(
-                    time: '3:20',icon: Icons.sunny,temperature: '450',
-                  ),
-                  HourlyForecast(
-                    time: '4:50',icon: Icons.sunny,temperature: '460',
-                  ),
-                  HourlyForecast(
-                    time: '6:15',icon: Icons.cloudy_snowing,temperature: '90',
-                  ),
-                  HourlyForecast(
-                    time: '7:05',icon: Icons.sunny,temperature: '440',
-                  ),
-                ],
+                  )),
+        
+              const SizedBox(
+                height: 30,
               ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            //additonal info
-            const Text(
-              'Additional Information',
-              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(
-              height: 18,
-            ),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                AdditionalInfo(
-                  icon: Icons.water_drop_outlined,
-                  data: 'Humidity',
-                  value: '91',
+              const Text(
+                'Weather Forecast',
+                style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              const SingleChildScrollView( 
+                scrollDirection: Axis.horizontal,
+                child:  Row(
+                  children: [
+                    //forecast cards
+                    HourlyForecast(
+                      time: '11:15',icon: Icons.cloud,temperature: '340',),
+                    HourlyForecast(
+                      time: '1:00',icon: Icons.beach_access,temperature: '130',
+                    ),
+                    HourlyForecast(
+                      time: '3:20',icon: Icons.sunny,temperature: '450',
+                    ),
+                    HourlyForecast(
+                      time: '4:50',icon: Icons.sunny,temperature: '460',
+                    ),
+                    HourlyForecast(
+                      time: '6:15',icon: Icons.cloudy_snowing,temperature: '90',
+                    ),
+                    HourlyForecast(
+                      time: '7:05',icon: Icons.sunny,temperature: '440',
+                    ),
+                  ],
                 ),
-                AdditionalInfo(
-                   icon: Icons.air,
-                  data: 'Wind Speed',
-                  value: '7.5',
-                ),
-                AdditionalInfo(
-                   icon: Icons.keyboard_double_arrow_down, 
-                  data: 'pressure',
-                  value: '1000',
-                ),
-             
-              ],
-            )
-          ],
-        ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              //additonal info
+              const Text(
+                'Additional Information',
+                style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 18,
+              ),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  AdditionalInfo(
+                    icon: Icons.water_drop_outlined,
+                    data: 'Humidity',
+                    value: '91',
+                  ),
+                  AdditionalInfo(
+                     icon: Icons.air,
+                    data: 'Wind Speed',
+                    value: '7.5',
+                  ),
+                  AdditionalInfo(
+                     icon: Icons.keyboard_double_arrow_down, 
+                    data: 'pressure',
+                    value: '1000',
+                  ),
+               
+                ],
+              )
+            ],
+          ),
+        );
+        }
       ),
     );
   }
