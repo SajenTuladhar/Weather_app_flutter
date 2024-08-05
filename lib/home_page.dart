@@ -19,8 +19,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   
-  Future getCurrentWeather() async{
-
+  Future<Map<String, dynamic>> getCurrentWeather() async{
     try{
     // Define the city for which to get the weather
    String city = 'Nepal';
@@ -33,11 +32,11 @@ class _HomeState extends State<Home> {
 
     final data = jsonDecode(result.body);
 
-    
-       data['list'][0]['main']['temp'] -273.15.round();
-      
-   
-    
+    if (data['cod']!= '200'){
+      throw 'An unexpected error occured';
+    }
+     return data; 
+       
     }
     catch(e){
       throw e.toString();
@@ -66,8 +65,19 @@ class _HomeState extends State<Home> {
           }
 
           if (snapshot.hasError){
-            return  Text(snapshot.error.toString());
+            return  Center(
+              child: Text(snapshot.error.toString()));
           }
+
+          final data = snapshot.data!;
+
+          final currentWeatherData= data['list'][0]; // this is the top of the list of data so it repeats alot of time
+          final currentWeatherTemp=  currentWeatherData['main']['temp'];
+          final currentSky = currentWeatherData['weather'][0]['main'];
+          final currentPressure = currentWeatherData['main']['pressure'];
+          final currentHumidity = currentWeatherData['main']['humidity'];
+          final currentWindSpeed = currentWeatherData['wind']['speed'];
+
           return Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -88,22 +98,23 @@ class _HomeState extends State<Home> {
                         child: Column(
                           children: [
                             Text(
-                              "temp C",
+                              "$currentWeatherTemp  k",
                               style: const TextStyle(
                                   fontSize: 32, fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(
                               height: 10,
                             ),
-                            const Icon(
-                              Icons.cloud,
+
+                             Icon(
+                              currentSky=='Clouds' || currentSky=='Rain'? Icons.cloud: Icons.sunny,
                               size: 70,
                             ),
                             const SizedBox(
                               height: 20,
                             ),
-                            const Text('Rain',
-                                style: TextStyle(
+                             Text(currentSky,
+                                style: const TextStyle(
                                   fontSize: 20,
                                 ))
                           ],
@@ -116,7 +127,7 @@ class _HomeState extends State<Home> {
                 height: 30,
               ),
               const Text(
-                'Weather Forecast',
+                'Hourly Forecast',
                 style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
               ),
               const SizedBox(
@@ -158,23 +169,23 @@ class _HomeState extends State<Home> {
               const SizedBox(
                 height: 18,
               ),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   AdditionalInfo(
                     icon: Icons.water_drop_outlined,
                     data: 'Humidity',
-                    value: '91',
+                    value: currentHumidity.toString(),
                   ),
                   AdditionalInfo(
                      icon: Icons.air,
                     data: 'Wind Speed',
-                    value: '7.5',
+                    value: currentWindSpeed.toString(),
                   ),
                   AdditionalInfo(
                      icon: Icons.keyboard_double_arrow_down, 
                     data: 'pressure',
-                    value: '1000',
+                    value: currentPressure.toString(),
                   ),
                
                 ],
