@@ -133,28 +133,18 @@ class _HomeState extends State<Home> {
               const SizedBox(
                 height: 15,
               ),
-              const SingleChildScrollView( 
+              SingleChildScrollView( 
                 scrollDirection: Axis.horizontal,
                 child:  Row(
                   children: [
                     //forecast cards
+                    for (int i =0 ;i<5; i++)
                     HourlyForecast(
-                      time: '11:15',icon: Icons.cloud,temperature: '340',),
-                    HourlyForecast(
-                      time: '1:00',icon: Icons.beach_access,temperature: '130',
-                    ),
-                    HourlyForecast(
-                      time: '3:20',icon: Icons.sunny,temperature: '450',
-                    ),
-                    HourlyForecast(
-                      time: '4:50',icon: Icons.sunny,temperature: '460',
-                    ),
-                    HourlyForecast(
-                      time: '6:15',icon: Icons.cloudy_snowing,temperature: '90',
-                    ),
-                    HourlyForecast(
-                      time: '7:05',icon: Icons.sunny,temperature: '440',
-                    ),
+                      time: data['list'][i + 1]['dt'].toString(),
+                      icon: data['list'][i + 1]['weather'][0]['main'] == 'Clouds' || data['list'][i + 1]['weather'][0]['main'] == 'Rain'? Icons.cloud : Icons.sunny,
+                      temperature: data['list'][i + 1]['main']['temp'].toString()
+                      ),
+                   
                   ],
                 ),
               ),
