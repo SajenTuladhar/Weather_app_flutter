@@ -49,7 +49,10 @@ class _HomeState extends State<Home> {
         centerTitle: true,
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+                });
+              },
               icon: const Icon(Icons.refresh))
         ],
       ),
@@ -132,7 +135,7 @@ class _HomeState extends State<Home> {
                           final timeString = hourlyForecast['dt_txt'] ?? '';
                           
                           if (timeString.isEmpty) {
-                            return SizedBox.shrink();
+                            return const SizedBox.shrink();
                           }
 
                           final time = DateTime.parse(timeString);
